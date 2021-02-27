@@ -16,7 +16,7 @@
 
 ### npm run style
 
-使用 **npm-run-all** 执行匹配的命令 **run-s style:\*\***。
+使用 **npm-run-all** 执行匹配的命令。
 
 ### npm run style:prettier
 
