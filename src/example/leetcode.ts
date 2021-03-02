@@ -63,25 +63,24 @@ class NumMatrix {
   constructor(matrix: number[][]) {
     const row = matrix.length
     const column = row !== 0 ? matrix[0].length : 0
-    let sum = 0
-    this.sums = new Array(row).fill(0).map(() => new Array(column).fill(0))
+    this.sums = new Array(row + 1).fill(0).map(() => new Array(column + 1).fill(0))
 
     for (let r = 0; r < row; r++) {
-      sum = 0
       for (let c = 0; c < column; c++) {
-        sum += matrix[r][c]
-        this.sums[r][c] = sum
+        // 左矩形  + 上矩形 - 左上矩形 + 自己
+        this.sums[r + 1][c + 1] = this.sums[r + 1][c] + this.sums[r][c + 1] - this.sums[r][c] + matrix[r][c]
       }
     }
+    console.info(this.sums)
   }
 
   sumRegion(row1: number, col1: number, row2: number, col2: number): number {
-    let sum = 0
-    for (let r = row1; r <= row2; r++) {
-      sum += (this.sums[r][col2] || 0) - (this.sums[r][col1 - 1] || 0)
-    }
-
-    return sum
+    const bigRect = this.sums[row2 + 1][col2 + 1]
+    const leftRect = this.sums[row2 + 1][col1]
+    const topRect = this.sums[row1][col2 + 1]
+    const leftTopRect = this.sums[row1][col1]
+    // 大矩形 - 左矩形 - 上矩形 + 左上矩形
+    return bigRect - leftRect - topRect + leftTopRect
   }
 }
 
