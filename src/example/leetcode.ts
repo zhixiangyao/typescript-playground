@@ -71,7 +71,6 @@ class NumMatrix {
         this.sums[r + 1][c + 1] = this.sums[r + 1][c] + this.sums[r][c + 1] - this.sums[r][c] + matrix[r][c]
       }
     }
-    console.info(this.sums)
   }
 
   sumRegion(row1: number, col1: number, row2: number, col2: number): number {
