@@ -14,14 +14,10 @@
 
 在构建应用程序时，会先清理 **build** 文件夹。
 
-### npm run style
-
-使用 **npm-run-all** 执行匹配的命令。
-
 ### npm run style:prettier
 
 美化代码
 
-### npm run style:lint
+### npm run style:eslint
 
 检查代码是否符合要求

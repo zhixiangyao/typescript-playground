@@ -1,6 +1,17 @@
-import { NumMatrix } from './example/leetcode'
+import * as esprima from 'esprima'
+import * as estraverse from 'estraverse'
 
-const obj = new NumMatrix([[-1]])
-const param = obj.sumRegion.apply(obj, [0, 0, 0, 0])
+const code = `function getUser() {}`
+// 生成 AST
+const ast = esprima.parseScript(code)
+// 转换 AST，只会遍历 type 属性
+// traverse 方法中有进入和离开两个钩子函数
 
-console.info(param)
+estraverse.traverse(ast, {
+  enter(node: any) {
+    console.log('enter -> node.type', node.type)
+  },
+  leave(node: any) {
+    console.log('leave -> node.type', node.type)
+  },
+})
