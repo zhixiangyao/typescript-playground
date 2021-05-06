@@ -28,6 +28,7 @@
     "esprima": "^4.0.1",
     "estraverse": "^5.2.0",
     "nodemon": "^2.0.7",
+    "ora": "^5.4.0",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
