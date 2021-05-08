@@ -1,4 +1,5 @@
 import readline from 'readline'
+import ora, { Color } from 'ora'
 
 const clearTerminal = (): void => {
   readline.cursorTo(process.stdout, 0, 0)
@@ -11,4 +12,19 @@ const log = (...args: any[]) => {
   // process.stdout.write(d + '\n')
 }
 
-export { clearTerminal, log }
+interface Spinner {
+  readonly interval: number
+  readonly frames: string[]
+}
+
+const anime = (color: Color = 'yellow', text = '', dots: Spinner) => {
+  const spinner = ora().start()
+
+  setTimeout(() => {
+    spinner.color = color
+    spinner.text = text
+    spinner.spinner = dots
+  }, 100)
+}
+
+export { clearTerminal, log, anime }

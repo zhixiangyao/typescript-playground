@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "typescript playground",
   "main": "build/index.js",
+  "keywords": [],
+  "author": "xiaojun996",
+  "license": "MIT",
+  "private": true,
   "scripts": {
     "start": "npm run build && node build/index.js",
     "start:dev": "nodemon",
@@ -10,9 +14,6 @@
     "style:eslint": "eslint \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
     "style:prettier": "prettier --write ."
   },
-  "keywords": [],
-  "author": "xiaojun996",
-  "license": "MIT",
   "devDependencies": {
     "@types/esprima": "^4.0.2",
     "@types/estraverse": "^5.1.0",
