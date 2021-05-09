@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "start": "npm run build && node build/index.js",
-    "start:dev": "nodemon ./src/index.ts",
+    "start:dev": "nodemon --config nodemon.json",
     "build": "rimraf ./build && tsc --project tsconfig.json",
     "lint:eslint": "eslint \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
     "lint:prettier": "prettier --write ."
