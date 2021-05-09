@@ -4,7 +4,7 @@ import { generate } from 'escodegen'
 import { Program, Node } from 'estree'
 import chalk from 'chalk'
 
-import { clearTerminal, log } from '../common/utils'
+import { log } from '../common/utils'
 
 /**
  * 使用 esprima 库的 parseScript 方法
@@ -12,8 +12,6 @@ import { clearTerminal, log } from '../common/utils'
  * 然后在 enter 钩子里修改 funciton 名
  */
 const modifyFnName = () => {
-  clearTerminal()
-
   const originCode = `function getUser() {}`
   const AST: Program = parseScript(originCode)
 

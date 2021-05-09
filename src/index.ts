@@ -1,9 +1,10 @@
 ;(async () => {
-  const { default: modifyFnName } = await import('./example/modifyFnName')
-  const utils = await import('./common/utils')
-  const { log } = utils
+  // const { default: modifyFnName } = await import('./example/modifyFnName')
+  const { clearTerminal } = await import('./common/utils')
+  const { minimumTimeRequired } = await import('./example/leetcode')
 
-  modifyFnName()
+  clearTerminal()
 
-  log(utils)
+  // modifyFnName()
+  minimumTimeRequired([3, 2, 3], 3)
 })()
