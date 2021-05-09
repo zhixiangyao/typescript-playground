@@ -1,24 +1,8 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "commonjs",
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "outDir": "build",
-    "rootDir": "src",
-    // 启用所有严格类型检查选项。
-    // 启用 --strict相当于启用 --noImplicitAny, --noImplicitThis, --alwaysStrict，
-    // --strictNullChecks和 --strictFunctionTypes和--strictPropertyInitialization。
-    "strict": true,
-    "types": ["node"],
-    "typeRoots": ["./node_modules/@types/"],
-    // 解析非相对模块名的基准目录
-    "baseUrl": "./",
-    // 编译过程中需要引入的库文件的列表。
-    "lib": ["ESNext"]
-  },
-  "include": ["src/**/*.ts", "src/**/*.d.ts"],
+  // 把基础配置抽离成 tsconfig.base.json 文件，然后引入。
+  "extends": "./tsconfig.base.json",
+  // include 属性作用是指定编译需要编译的文件或目录。
+  "include": ["src/"],
+  // exclude 属性作用是指定编译器需要排除的文件或文件夹。
   "exclude": ["build", "node_modules"]
 }

@@ -5,28 +5,33 @@ import { Program, Node } from 'estree'
 import chalk from 'chalk'
 
 import { clearTerminal, log } from '../common/utils'
-clearTerminal()
 
 /**
  * 使用 esprima 库的 parseScript 方法
  * 把 originCode 转换成 AST（抽象代码树 Abstract Ayntax Tree）
  * 然后在 enter 钩子里修改 funciton 名
  */
-const originCode = `function getUser() {}`
-const AST: Program = parseScript(originCode)
+const modifyFnName = () => {
+  clearTerminal()
 
-log(chalk.green.bold('Ast =>'), AST)
-log(chalk.green.bold('Old =>'), chalk.yellow(generate(AST)))
+  const originCode = `function getUser() {}`
+  const AST: Program = parseScript(originCode)
 
-traverse(AST, {
-  enter(node: Node): void {
-    log(chalk.red(`enter => node.type: ${node.type}`))
+  log(chalk.green.bold('Ast =>'), AST)
+  log(chalk.green.bold('Old =>'), chalk.yellow(generate(AST)))
 
-    if (node.type === 'Identifier') node.name = 'getBroker'
-  },
-  leave(node: Node): void {
-    log(chalk.blue(`leave => node.type: ${node.type}`))
-  },
-})
+  traverse(AST, {
+    enter(node: Node): void {
+      log(chalk.red(`enter => node.type: ${node.type}`))
 
-log(chalk.green.bold('New =>'), chalk.yellow(generate(AST)))
+      if (node.type === 'Identifier') node.name = 'getBroker'
+    },
+    leave(node: Node): void {
+      log(chalk.blue(`leave => node.type: ${node.type}`))
+    },
+  })
+
+  log(chalk.green.bold('New =>'), chalk.yellow(generate(AST)))
+}
+
+export default modifyFnName

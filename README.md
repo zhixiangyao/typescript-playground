@@ -12,12 +12,12 @@
 
 ### npm run build
 
-在构建应用程序时，会先清理 **build** 文件夹。
+在构建应用程序时，会先用 rimraf ./build 清理 **build** 文件夹，再执行 tsc --project tsconfig.json 进行编译。
 
-### npm run style:prettier
+### npm run lint:prettier
 
 美化代码
 
-### npm run style:eslint
+### npm run lint:eslint
 
 检查代码是否符合要求
