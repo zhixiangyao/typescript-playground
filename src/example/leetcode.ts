@@ -1,6 +1,3 @@
-import chalk from 'chalk'
-import { log } from '../common/utils'
-
 /**
  * 896. Monotonic Array 单调数列
  * https://leetcode-cn.com/problems/monotonic-array/
@@ -102,7 +99,7 @@ function minimumTimeRequired(jobs: number[], k: number): number {
    * max   : 当前的「最大工作时间」
    */
   const dfs = (u: number, sum: number[], max: number): void => {
-    log(chalk.blue(`工人的分配情况: ${sum}`), ',', `当前的「最大工作时间」: ${max}`)
+    // 当前处理到那个 job 刚好达到 len 值时（任务都被处理完了），取最大
     if (max >= ans) return
     if (u === len) {
       ans = max
@@ -111,6 +108,7 @@ function minimumTimeRequired(jobs: number[], k: number): number {
     for (let i = 0; i < k; i++) {
       sum[i] += jobs[u]
       dfs(u + 1, sum, Math.max(sum[i], max))
+      // 枝剪
       sum[i] -= jobs[u]
     }
   }

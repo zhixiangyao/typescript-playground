@@ -4,7 +4,6 @@
     "module": "commonjs",
     "experimentalDecorators": true,
     "sourceMap": false,
-    "esModuleInterop": true,
     "resolveJsonModule": true,
     "outDir": "build",
     "rootDir": "src",
@@ -12,10 +11,13 @@
     // 启用 --strict相当于启用 --noImplicitAny, --noImplicitThis, --alwaysStrict，
     // --strictNullChecks和 --strictFunctionTypes和--strictPropertyInitialization。
     "strict": true,
+    "alwaysStrict": true,
     "types": ["node"],
     "typeRoots": ["./node_modules/@types/"],
-    // 解析非相对模块名的基准目录
+    // 解析 非相对模块名 的 基准目录
+    "esModuleInterop": true,
     "baseUrl": "./",
+    "paths": {},
     // 编译过程中需要引入的库文件的列表。
     "lib": ["ESNext"]
   }
