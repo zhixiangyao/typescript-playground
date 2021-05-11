@@ -17,7 +17,9 @@
     // 解析 非相对模块名 的 基准目录
     "esModuleInterop": true,
     "baseUrl": "./",
-    "paths": {},
+    "paths": {
+      "@common/*": ["src/common/*"],
+    },
     // 编译过程中需要引入的库文件的列表。
     "lib": ["ESNext"]
   }
