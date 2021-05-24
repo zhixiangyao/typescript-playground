@@ -1,5 +1,10 @@
 import readline from 'readline'
 import ora, { Color } from 'ora'
+import { parseScript } from 'esprima'
+import { traverse } from 'estraverse'
+import { generate } from 'escodegen'
+import { Program, Node } from 'estree'
+import chalk from 'chalk'
 
 const clearTerminal = (): void => {
   readline.cursorTo(process.stdout, 0, 0)
@@ -27,4 +32,14 @@ const anime = (color: Color = 'yellow', text = '', dots: Spinner) => {
   }, 100)
 }
 
-export { clearTerminal, log, anime }
+export {
+  clearTerminal,
+  log,
+  anime,
+  parseScript,
+  traverse,
+  generate,
+  Program,
+  Node,
+  chalk,
+}

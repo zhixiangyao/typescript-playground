@@ -9,13 +9,12 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     ecmaVersion: 2020,
     sourceType: 'module',
-    jsxPragma: 'React',
-    ecmaFeatures: {
-      jsx: true,
-      tsx: true,
-    },
   },
-  extends: ['plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'plugin:prettier/recommended',
+  ],
   rules: {
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -43,5 +42,17 @@ module.exports = {
       },
     ],
     'space-before-function-paren': 'off',
+    'prettier/prettier': [
+      'warn',
+      {
+        '#': 'prettier config in here :)',
+        semi: false,
+        singleQuote: true,
+        trailingComma: 'es5',
+        printWidth: 80,
+        vueIndentScriptAndStyle: false,
+        arrowParens: 'avoid',
+      },
+    ],
   },
 }

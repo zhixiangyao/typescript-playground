@@ -1,8 +1,10 @@
 ;(async () => {
-  const { default: modifyFnName } = await import('@example/modifyFnName')
+  const { default: transformArrowFn } = await import(
+    '@example/transformArrowFn'
+  )
   const { clearTerminal } = await import('@common/utils')
 
   clearTerminal()
 
-  modifyFnName()
+  transformArrowFn()
 })()

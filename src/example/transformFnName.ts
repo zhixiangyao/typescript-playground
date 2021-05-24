@@ -1,17 +1,19 @@
-import { parseScript } from 'esprima'
-import { traverse } from 'estraverse'
-import { generate } from 'escodegen'
-import { Program, Node } from 'estree'
-import chalk from 'chalk'
-
-import { log } from '@common/utils'
+import {
+  parseScript,
+  traverse,
+  generate,
+  Program,
+  Node,
+  chalk,
+  log,
+} from '@common/utils'
 
 /**
  * 使用 esprima 库的 parseScript 方法
  * 把 originCode 转换成 AST（抽象代码树 Abstract Ayntax Tree）
  * 然后在 enter 钩子里修改 funciton 名
  */
-const modifyFnName = () => {
+const transformFnName = () => {
   const originCode = `function getUser() {}`
   const AST: Program = parseScript(originCode)
 
@@ -22,6 +24,7 @@ const modifyFnName = () => {
     enter(node: Node): void {
       log(chalk.red(`enter => node.type: ${node.type}`))
 
+      // 修改 Identifier，也就是 方法名
       if (node.type === 'Identifier') node.name = 'getBroker'
     },
     leave(node: Node): void {
@@ -32,4 +35,4 @@ const modifyFnName = () => {
   log(chalk.green.bold('New =>'), chalk.yellow(generate(AST)))
 }
 
-export default modifyFnName
+export default transformFnName
