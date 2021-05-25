@@ -2,12 +2,11 @@ import { parseScript, traverse, generate, Program, Node, chalk, log } from '@com
 
 /**
  * 使用 esprima 库的 parseScript 方法
- * 把 originCode 转换成 AST（抽象代码树 Abstract Ayntax Tree）
+ * 把 code 转换成 AST（抽象代码树 Abstract Ayntax Tree）
  * 然后在 enter 钩子里修改 funciton 名
  */
-const transformFnName = () => {
-  const originCode = `function getUser() {}`
-  const AST: Program = parseScript(originCode)
+const transformFnName = (code = `function getUser() {}`): string | null | undefined => {
+  const AST: Program = parseScript(code)
 
   log(chalk.green.bold('Ast =>'), AST)
   log(chalk.green.bold('Old =>'), chalk.yellow(generate(AST)))
@@ -25,6 +24,8 @@ const transformFnName = () => {
   })
 
   log(chalk.green.bold('New =>'), chalk.yellow(generate(AST)))
+
+  return generate(AST)
 }
 
 export default transformFnName
