@@ -1,37 +1,46 @@
-import {
-  parseScript,
-  traverse,
-  generate,
-  Program,
-  Node,
-  chalk,
-  log,
-} from '@common/utils'
+import { PluginItem, NodePath, types, BabelFileResult } from '@babel/core'
+import { transform } from '@babel/core'
+import { returnStatement, blockStatement, functionExpression } from '@babel/types'
 
-/**
- * 使用 esprima 库的 parseScript 方法
- * 把 originCode 转换成 AST（抽象代码树 Abstract Ayntax Tree）
- * 然后在 enter 钩子里修改 arrow funciton 为 funciton
- */
+import { chalk, log } from '@common/index'
+
 const transformArrowFn = () => {
-  const originCode = `const fn = (a, b) => a + b`
-  const AST: Program = parseScript(originCode)
+  // 转换后 const fn = function(a, b) { return a + b }
+  const originCode = `const fn = (a, b) => a + b;`
 
-  log(chalk.green.bold('Ast =>'), AST)
-  log(chalk.green.bold('Old =>'), chalk.yellow(generate(AST)))
+  log(chalk.green('old => '), originCode)
 
-  traverse(AST, {
-    enter(node: Node): void {
-      log(chalk.red(`enter => node.type: ${node.type}`))
+  const arrowFnPlugin = (): PluginItem => {
+    return {
+      // 访问者模式
+      visitor: {
+        // 当访问到某个路径的时候进行匹配
 
-      // 修改 Identifier，也就是 方法名
-    },
-    leave(node: Node): void {
-      log(chalk.blue(`leave => node.type: ${node.type}`))
-    },
+        ArrowFunctionExpression(path: NodePath<types.ArrowFunctionExpression>) {
+          const { node } = path //      节点 node: (a, b) => a + b
+          const { params } = node //    函数的参数
+          const { body }: any = node // 二进制表达式: a + b
+
+          // returnStatement
+          const newReturnStatement = returnStatement(body)
+
+          // blockStatement
+          const newBlockStatement = blockStatement([newReturnStatement])
+
+          // functionExpression
+          const newFunctionExpression = functionExpression(null, params, newBlockStatement)
+
+          path.replaceWith(newFunctionExpression)
+        },
+      },
+    }
+  }
+
+  const babelData: BabelFileResult | null = transform(originCode, {
+    plugins: [arrowFnPlugin],
   })
 
-  log(chalk.green.bold('New =>'), chalk.yellow(generate(AST)))
+  log(chalk.red('new => '), babelData?.code)
 }
 
 export default transformArrowFn
