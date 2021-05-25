@@ -5,7 +5,6 @@ import { returnStatement, blockStatement, functionExpression } from '@babel/type
 import { chalk, log } from '@common/index'
 
 const transformArrowFn = () => {
-  // 转换后 const fn = function(a, b) { return a + b }
   const code = `const fn = (a, b) => a + b;`
 
   log(chalk.green('old => '), code)
@@ -18,13 +17,13 @@ const transformArrowFn = () => {
         const { params } = node //    函数的参数
         const { body }: any = node // 二进制表达式: a + b
 
-        // returnStatement
+        // * returnStatement: return a + b
         const newReturnStatement = returnStatement(body)
 
-        // blockStatement
+        // * blockStatement: { return a + b }
         const newBlockStatement = blockStatement([newReturnStatement])
 
-        // functionExpression
+        // * functionExpression: function(a, b) { return a + b }
         const newFunctionExpression = functionExpression(null, params, newBlockStatement)
 
         path.replaceWith(newFunctionExpression)
@@ -36,6 +35,7 @@ const transformArrowFn = () => {
     plugins: [arrowFnPlugin],
   })
 
+  // 转换后 const fn = function(a, b) { return a + b }
   log(chalk.red('new => '), data?.code)
 }
 
