@@ -1,10 +1,5 @@
-;(async () => {
-  const { default: transformArrowFn } = await import(
-    '@example/transformArrowFn'
-  )
-  const { clearTerminal } = await import('@common/utils')
+import { clearTerminal } from '@common/index'
+import transformArrowFn from '@example/transformArrowFn'
 
-  clearTerminal()
-
-  transformArrowFn()
-})()
+clearTerminal()
+transformArrowFn()

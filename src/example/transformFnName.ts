@@ -1,12 +1,4 @@
-import {
-  parseScript,
-  traverse,
-  generate,
-  Program,
-  Node,
-  chalk,
-  log,
-} from '@common/utils'
+import { parseScript, traverse, generate, Program, Node, chalk, log } from '@common/index'
 
 /**
  * 使用 esprima 库的 parseScript 方法
