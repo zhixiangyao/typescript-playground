@@ -15,7 +15,12 @@ import { parse } from '@babel/parser'
 
 import { log } from '@common/index'
 
-const transformRest2ES5 = (code = `const arr = [ ...arr1, ...arr2 ];`) => {
+/**
+ * rest to es5
+ * @param code const arr = [ ...arr1, ...arr2 ];
+ * @returns var arr = [].concat(arr1, arr2)
+ */
+const transformRest2ES5 = (code = `const arr = [ ...arr1, ...arr2 ];`): string => {
   const AST = parse(code)
 
   log(chalk.green.bold('old =>'))
@@ -48,8 +53,9 @@ const transformRest2ES5 = (code = `const arr = [ ...arr1, ...arr2 ];`) => {
 
   const newCode = generate(AST).code
 
-  log(chalk.red.bold('New =>'))
+  // 转换后
   // var arr = [].concat(arr1, arr2)
+  log(chalk.red.bold('New =>'))
   log(newCode)
 
   return newCode
