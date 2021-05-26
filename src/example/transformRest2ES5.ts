@@ -9,7 +9,7 @@ import {
   variableDeclarator,
   variableDeclaration,
 } from '@babel/types'
-import { VariableDeclaration, SpreadElement, Identifier } from '@babel/types'
+import { VariableDeclaration, SpreadElement } from '@babel/types'
 import { default as chalk } from 'chalk'
 import { parse } from '@babel/parser'
 
