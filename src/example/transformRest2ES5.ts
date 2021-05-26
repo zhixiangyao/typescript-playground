@@ -1,6 +1,15 @@
 import { default as generate } from '@babel/generator'
 import { default as traverse, NodePath } from '@babel/traverse'
-import { VariableDeclaration } from '@babel/types'
+import {
+  isArrayExpression,
+  memberExpression,
+  arrayExpression,
+  identifier,
+  callExpression,
+  variableDeclarator,
+  variableDeclaration,
+} from '@babel/types'
+import { VariableDeclaration, SpreadElement, Identifier } from '@babel/types'
 import { default as chalk } from 'chalk'
 import { parse } from '@babel/parser'
 
@@ -14,14 +23,36 @@ const transformRest2ES5 = (code = `const arr = [ ...arr1, ...arr2 ];`) => {
 
   traverse(AST, {
     VariableDeclaration(path: NodePath<VariableDeclaration>) {
-      const { node } = path //      节点: const arr = [ ...arr1, ...arr2 ];
+      const { node } = path //         节点: const arr = [ ...arr1, ...arr2 ];
+      const { declarations } = node // declarations: arr = [ ...arr1, ...arr2 ];
+      const kind = 'var'
 
-      log(node)
+      // 边界判定
+      if (node.kind !== kind && declarations.length === 1 && isArrayExpression(declarations[0].init)) {
+        const args: SpreadElement[] = declarations[0].init.elements.map(item => {
+          const { argument }: any = item
+          return argument
+        })
+        // [].concat()
+        const callee = memberExpression(arrayExpression(), identifier('concat'))
+        // [].concat(arr1, arr2)
+        const init = callExpression(callee, args)
+        // arr = [].concat(arr1, arr2)
+        const declaration = variableDeclarator(declarations[0].id, init)
+        // var arr = [].concat(arr1, arr2)
+        const newVariableDeclaration = variableDeclaration(kind, [declaration])
+        path.replaceWith(newVariableDeclaration)
+      }
     },
   })
 
+  const newCode = generate(AST).code
+
   log(chalk.red.bold('New =>'))
-  log(generate(AST).code)
+  // var arr = [].concat(arr1, arr2)
+  log(newCode)
+
+  return newCode
 }
 
 export default transformRest2ES5
