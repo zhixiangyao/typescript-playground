@@ -59,6 +59,7 @@ import { post } from 'axios';`.trimStart()
   // 转换后
   // import { Button } from 'vant/lib/Button';
   // import { Icon } from 'vant/lib/Icon';
+  // import vant from 'vant';
   log(chalk.red('new => '))
   log(data?.code)
 
