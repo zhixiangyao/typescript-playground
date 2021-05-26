@@ -1,5 +1,5 @@
 import { clearTerminal } from '@common/index'
-import transformImportPath from '@example/transformImportPath'
+import transformImport from '@example/transformImport'
 
 clearTerminal()
-transformImportPath()
+transformImport()
