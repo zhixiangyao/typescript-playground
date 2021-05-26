@@ -31,7 +31,7 @@ import { post } from 'axios';`.trimStart()
           const { specifiers, source } = node
 
           // import 有 2 种，一种是 specifier 一种是 default specifier
-          // 这里要排除掉 library 名不匹配，且非唯一 default import 导入
+          // 这里要排除掉 library 名不匹配，且非唯一 default import 导入（这里利用 default 只能在头部的特性，判断尾部就可以了）
           if (source.value === libraryName && isImportSpecifier(specifiers[specifiers.length - 1])) {
             const result = specifiers.map(specifier => {
               let newSource = undefined
