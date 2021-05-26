@@ -8,8 +8,8 @@ import { parseScript, traverse, generate, Program, Node, chalk, log } from '@com
 const transformFnName = (code = `function getUser() {}`): string | null | undefined => {
   const AST: Program = parseScript(code)
 
-  log(chalk.green.bold('Ast =>'), AST)
-  log(chalk.green.bold('Old =>'), chalk.yellow(generate(AST)))
+  log(chalk.green.bold('Old =>'))
+  log(chalk.yellow(generate(AST)))
 
   traverse(AST, {
     enter(node: Node): void {
@@ -22,10 +22,12 @@ const transformFnName = (code = `function getUser() {}`): string | null | undefi
       log(chalk.blue(`leave => node.type: ${node.type}`))
     },
   })
+  const newCode = generate(AST)
 
-  log(chalk.green.bold('New =>'), chalk.yellow(generate(AST)))
+  log(chalk.green.bold('New =>'))
+  log(chalk.yellow(newCode))
 
-  return generate(AST)
+  return newCode
 }
 
 export default transformFnName
