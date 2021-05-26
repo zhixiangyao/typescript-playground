@@ -1,5 +1,5 @@
 import { clearTerminal } from '@common/index'
-import transformImport from '@example/transformImport'
+import transformRest2ES5 from '@example/transformRest2ES5'
 
 clearTerminal()
-transformImport()
+transformRest2ES5()

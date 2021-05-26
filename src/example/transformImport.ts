@@ -1,8 +1,15 @@
-import { PluginItem, BabelFileResult, NodePath, types } from '@babel/core'
+import {
+  importDeclaration,
+  importDefaultSpecifier,
+  stringLiteral,
+  isImportSpecifier,
+  ImportDeclaration,
+} from '@babel/types'
+import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
+import { default as chalk } from 'chalk'
 import { transform } from '@babel/core'
-import { importDeclaration, importDefaultSpecifier, stringLiteral, isImportSpecifier } from '@babel/types'
 
-import { chalk, log } from '@common/index'
+import { log } from '@common/index'
 
 const transformImport = (
   code = `
@@ -26,7 +33,7 @@ import { post } from 'axios';`.trimStart()
 
     return {
       visitor: {
-        ImportDeclaration(path: NodePath<types.ImportDeclaration>) {
+        ImportDeclaration(path: NodePath<ImportDeclaration>) {
           const { node } = path //      节点: import { Button, Icon } from 'vant'
           const { specifiers, source } = node
 

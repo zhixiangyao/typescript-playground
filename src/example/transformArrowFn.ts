@@ -1,8 +1,10 @@
-import { PluginItem, NodePath, types, BabelFileResult } from '@babel/core'
+import { returnStatement, blockStatement, functionExpression, ArrowFunctionExpression } from '@babel/types'
+import { PluginItem, NodePath, BabelFileResult } from '@babel/core'
 import { transform } from '@babel/core'
-import { returnStatement, blockStatement, functionExpression } from '@babel/types'
+import { default as chalk } from 'chalk'
 
-import { chalk, log } from '@common/index'
+import {  log } from '@common/index'
+
 
 const transformArrowFn = (code = `const fn = (a, b) => a + b;`): string | null | undefined => {
   log(chalk.green('old => '))
@@ -12,7 +14,7 @@ const transformArrowFn = (code = `const fn = (a, b) => a + b;`): string | null |
     return {
       visitor: {
         // 当访问到某个路径的时候进行匹配
-        ArrowFunctionExpression(path: NodePath<types.ArrowFunctionExpression>) {
+        ArrowFunctionExpression(path: NodePath<ArrowFunctionExpression>) {
           const { node } = path //      节点 node: (a, b) => a + b
           const { params } = node //    函数的参数
           const { body }: any = node // 二进制表达式: a + b

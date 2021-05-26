@@ -15,6 +15,11 @@
     "lint:prettier": "prettier --write ."
   },
   "dependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/generator": "^7.14.3",
+    "@babel/parser": "^7.14.3",
+    "@babel/traverse": "^7.14.2",
+    "@babel/types": "^7.14.2",
     "chalk": "^4.1.1",
     "cli-spinners": "^2.6.0",
     "escodegen": "^2.0.0",
@@ -23,9 +28,8 @@
     "ora": "^5.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/types": "^7.14.2",
     "@types/babel__core": "^7.1.14",
+    "@types/babylon": "^6.16.5",
     "@types/escodegen": "^0.0.6",
     "@types/esprima": "^4.0.2",
     "@types/estraverse": "^5.1.0",
