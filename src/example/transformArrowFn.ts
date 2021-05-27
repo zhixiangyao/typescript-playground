@@ -1,6 +1,9 @@
-import { returnStatement, blockStatement, functionExpression, ArrowFunctionExpression } from '@babel/types'
+import { returnStatement, blockStatement, functionExpression } from '@babel/types'
 import { PluginItem, NodePath, BabelFileResult } from '@babel/core'
+
+import { ArrowFunctionExpression } from '@babel/types'
 import { transform } from '@babel/core'
+
 import { default as chalk } from 'chalk'
 
 import { log } from '@common/index'
