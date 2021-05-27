@@ -3,8 +3,7 @@ import { PluginItem, NodePath, BabelFileResult } from '@babel/core'
 import { transform } from '@babel/core'
 import { default as chalk } from 'chalk'
 
-import {  log } from '@common/index'
-
+import { log } from '@common/index'
 
 const transformArrowFn = (code = `const fn = (a, b) => a + b;`): string | null | undefined => {
   log(chalk.green('old => '))
