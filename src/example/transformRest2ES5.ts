@@ -7,9 +7,11 @@ import {
   variableDeclarator,
   variableDeclaration,
 } from '@babel/types'
+import { transform } from '@babel/core'
+
 import { VariableDeclaration, SpreadElement } from '@babel/types'
 import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
-import { transform } from '@babel/core'
+
 import { default as chalk } from 'chalk'
 
 import { log } from '@common/index'
