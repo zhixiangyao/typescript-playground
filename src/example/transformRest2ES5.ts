@@ -1,8 +1,8 @@
 import {
   isArrayExpression,
-  memberExpression,
   arrayExpression,
   identifier,
+  memberExpression,
   callExpression,
   variableDeclarator,
   variableDeclaration,

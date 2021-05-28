@@ -1,13 +1,9 @@
-import {
-  importDeclaration,
-  importDefaultSpecifier,
-  stringLiteral,
-  isImportSpecifier,
-  ImportDeclaration,
-} from '@babel/types'
-import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
-import { default as chalk } from 'chalk'
+import { isImportSpecifier, stringLiteral, importDefaultSpecifier, importDeclaration } from '@babel/types'
 import { transform } from '@babel/core'
+import { default as chalk } from 'chalk'
+
+import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
+import { ImportDeclaration } from '@babel/types'
 
 import { log } from '@common/index'
 
@@ -60,7 +56,10 @@ import { post } from 'axios';`.trimStart()
   }
 
   const data: BabelFileResult | null = transform(code, {
-    plugins: [transformImportPlugin({ libraryName: 'vant', libraryDirectory: 'lib' })],
+    plugins: [
+      transformImportPlugin({ libraryName: 'vant', libraryDirectory: 'lib' }),
+      transformImportPlugin({ libraryName: 'axios', libraryDirectory: 'lib' }),
+    ],
   })
 
   // 转换后

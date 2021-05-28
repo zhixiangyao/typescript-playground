@@ -1,5 +1,5 @@
 import { clearTerminal } from '@common/index'
-import transformArrowFn from '@example/transformArrowFn'
+import transformImport from '@example/transformImport'
 
 clearTerminal()
-transformArrowFn()
+transformImport()
