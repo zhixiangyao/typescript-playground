@@ -10,6 +10,25 @@ import { default as chalk } from 'chalk'
 
 import { log } from '@common/index'
 
+const transformAsyncAwaitPlugin = (): PluginItem => {
+  return {
+    visitor: {
+      FunctionDeclaration(path: NodePath<FunctionDeclaration>) {
+        // Node: async function func() { await asyncFn(); }
+        const { node } = path
+        // Edentifier: e
+        const catchParam = identifier('e')
+        // BlockStatement: console.log(e);
+        const catchBlock = blockStatement([parse('console.log(e);').program.body[0]])
+        // CatchClause: catch (e) { console.log(e); }
+        const catchHandler = catchClause(catchParam, catchBlock)
+        const tryCatchBlock = tryStatement(node.body, catchHandler)
+        path.replaceWith(tryCatchBlock)
+      },
+    },
+  }
+}
+
 /**
  * try/catch an exception for async/await
  *
@@ -20,31 +39,12 @@ const transformAsyncAwait = (code = `async function func() { await asyncFn();}`)
   log(chalk.green.bold('old =>'))
   log(code)
 
-  const transformAsyncAwaitPlugin = (): PluginItem => {
-    return {
-      visitor: {
-        FunctionDeclaration(path: NodePath<FunctionDeclaration>) {
-          // Node: async function func() { await asyncFn(); }
-          const { node } = path
-          // Edentifier: e
-          const catchParam = identifier('e')
-          // BlockStatement: console.log(e);
-          const catchBlock = blockStatement([parse('console.log(e);').program.body[0]])
-          // CatchClause: catch (e) { console.log(e); }
-          const catchHandler = catchClause(catchParam, catchBlock)
-          const tryCatchBlock = tryStatement(node.body, catchHandler)
-          path.replaceWith(tryCatchBlock)
-        },
-      },
-    }
-  }
-
   const data: BabelFileResult | null = transform(code, {
     plugins: [transformAsyncAwaitPlugin()],
   })
 
-  // 转换后
   /**
+   * 转换后
    * async function func() {
    *   try {
    *     await asyncFn();
@@ -60,3 +60,4 @@ const transformAsyncAwait = (code = `async function func() { await asyncFn();}`)
 }
 
 export default transformAsyncAwait
+export { transformAsyncAwaitPlugin }
