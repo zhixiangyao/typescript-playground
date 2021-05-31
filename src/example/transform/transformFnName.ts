@@ -1,9 +1,10 @@
 import { parseScript } from 'esprima'
 import { traverse } from 'estraverse'
 import { generate } from 'escodegen'
-import { Program, Node } from 'estree'
 import { default as chalk } from 'chalk'
 import { log } from '@common/index'
+
+import { Program, Node } from 'estree'
 
 /**
  * 使用 esprima 库的 parseScript 方法

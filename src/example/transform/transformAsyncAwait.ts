@@ -1,14 +1,11 @@
-import { catchClause, identifier, blockStatement, tryStatement } from '@babel/types'
+import { identifier, blockStatement, catchClause, tryStatement } from '@babel/types'
 import { transform } from '@babel/core'
+import { parse } from '@babel/parser'
+import { default as chalk } from 'chalk'
+import { log } from '@common/index'
 
 import { FunctionDeclaration } from '@babel/types'
 import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
-
-import { parse } from '@babel/parser'
-
-import { default as chalk } from 'chalk'
-
-import { log } from '@common/index'
 
 const transformAsyncAwaitPlugin = (): PluginItem => {
   return {
