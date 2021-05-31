@@ -29,11 +29,9 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.14",
-    "@types/babylon": "^6.16.5",
     "@types/escodegen": "^0.0.6",
     "@types/esprima": "^4.0.2",
     "@types/estraverse": "^5.1.0",
-    "@types/estree": "^0.0.47",
     "@types/node": "^15.6.1",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
