@@ -1,5 +1,5 @@
 import { clearTerminal } from '@common/index'
-import transformImport from '@example/transform/transformImport'
+import transformAsyncAwait from '@example/transform/transformAsyncAwait'
 
 clearTerminal()
-transformImport()
+transformAsyncAwait()
