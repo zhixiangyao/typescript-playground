@@ -14,7 +14,7 @@ import { log } from '@common/index'
 import { VariableDeclaration, SpreadElement } from '@babel/types'
 import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
 
-const transformRest2ES5Plugin = (): PluginItem => {
+const transformArrayRest2ES5Plugin = (): PluginItem => {
   return {
     visitor: {
       VariableDeclaration(path: NodePath<VariableDeclaration>) {
@@ -48,12 +48,12 @@ const transformRest2ES5Plugin = (): PluginItem => {
  * @param code const arr = [ ...arr1, ...arr2 ];
  * @returns var arr = [].concat(arr1, arr2)
  */
-const transformRest2ES5 = (code = `const arr = [ ...arr1, ...arr2 ];`): string | null | undefined => {
+const transformArrayRest2ES5 = (code = `const arr = [ ...arr1, ...arr2 ];`): string | null | undefined => {
   log(chalk.green.bold('old =>'))
   log(code)
 
   const data: BabelFileResult | null = transform(code, {
-    plugins: [transformRest2ES5Plugin()],
+    plugins: [transformArrayRest2ES5Plugin()],
   })
 
   // 转换后
@@ -64,5 +64,5 @@ const transformRest2ES5 = (code = `const arr = [ ...arr1, ...arr2 ];`): string |
   return data?.code
 }
 
-export default transformRest2ES5
-export { transformRest2ES5Plugin }
+export default transformArrayRest2ES5
+export { transformArrayRest2ES5Plugin }
