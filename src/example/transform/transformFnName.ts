@@ -4,7 +4,7 @@ import { generate } from 'escodegen'
 import { default as chalk } from 'chalk'
 import { log } from '@common/index'
 
-import { Program, Node } from 'estree'
+import type { Program, Node } from 'estree'
 
 /**
  * 使用 esprima 库的 parseScript 方法

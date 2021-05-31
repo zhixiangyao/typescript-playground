@@ -3,8 +3,8 @@ import { transform } from '@babel/core'
 import { default as chalk } from 'chalk'
 import { log } from '@common/index'
 
-import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
-import { ImportDeclaration } from '@babel/types'
+import type { PluginItem, BabelFileResult, NodePath } from '@babel/core'
+import type { ImportDeclaration } from '@babel/types'
 
 interface TransformImportPathPluginOptions {
   libraryName?: string

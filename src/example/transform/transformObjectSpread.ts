@@ -3,7 +3,7 @@ import { isObjectPattern, identifier, memberExpression, variableDeclarator, vari
 import { default as chalk } from 'chalk'
 import { log } from '@common/index'
 
-import {
+import type {
   VariableDeclaration,
   ObjectExpression,
   ObjectPattern,
@@ -11,7 +11,7 @@ import {
   Identifier,
   VariableDeclarator,
 } from '@babel/types'
-import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
+import type { PluginItem, BabelFileResult, NodePath } from '@babel/core'
 
 const transformObjectSpreadPlugin = (): PluginItem => {
   return {

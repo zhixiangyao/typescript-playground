@@ -11,8 +11,8 @@ import { transform } from '@babel/core'
 import { default as chalk } from 'chalk'
 import { log } from '@common/index'
 
-import { VariableDeclaration, SpreadElement } from '@babel/types'
-import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
+import type { VariableDeclaration, SpreadElement } from '@babel/types'
+import type { PluginItem, BabelFileResult, NodePath } from '@babel/core'
 
 const transformArraySpreadPlugin = (): PluginItem => {
   return {

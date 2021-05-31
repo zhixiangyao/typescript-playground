@@ -3,8 +3,8 @@ import { transform } from '@babel/core'
 import { default as chalk } from 'chalk'
 import { log } from '@common/index'
 
-import { PluginItem, NodePath, BabelFileResult } from '@babel/core'
-import { ArrowFunctionExpression } from '@babel/types'
+import type { PluginItem, NodePath, BabelFileResult } from '@babel/core'
+import type { ArrowFunctionExpression } from '@babel/types'
 
 const arrowFnPlugin = (): PluginItem => {
   return {

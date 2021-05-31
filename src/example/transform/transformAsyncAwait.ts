@@ -4,8 +4,8 @@ import { parse } from '@babel/parser'
 import { default as chalk } from 'chalk'
 import { log } from '@common/index'
 
-import { FunctionDeclaration } from '@babel/types'
-import { PluginItem, BabelFileResult, NodePath } from '@babel/core'
+import type { FunctionDeclaration } from '@babel/types'
+import type { PluginItem, BabelFileResult, NodePath } from '@babel/core'
 
 const transformAsyncAwaitPlugin = (): PluginItem => {
   return {
