@@ -25,6 +25,11 @@
 ```jsonc
 {
   "dependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/generator": "^7.14.3",
+    "@babel/parser": "^7.14.4",
+    "@babel/traverse": "^7.14.2",
+    "@babel/types": "^7.14.4",
     /* console.log 打印彩色 */
     "chalk": "^4.1.1",
     "cli-spinners": "^2.6.0",
@@ -38,24 +43,28 @@
     "ora": "^5.4.0"
   },
   "devDependencies": {
+    /* 以下 5 个，都是 ts 类型提示 */
+    "@types/babel__core": "^7.1.14",
     "@types/escodegen": "^0.0.6",
     "@types/esprima": "^4.0.2",
     "@types/estraverse": "^5.1.0",
-    "@types/estree": "^0.0.47",
-    "@types/node": "^15.0.2",
-    "@typescript-eslint/eslint-plugin": "^4.22.1",
-    "@typescript-eslint/parser": "^4.22.1",
-    "eslint": "^7.25.0",
+    "@types/node": "^15.6.1",
+    /* eslint 相关 */
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     /* 监听文件修改自动运行 ts-node 脚本 nodemon.json */
     "nodemon": "^2.0.7",
-    "prettier": "^2.2.1",
+    /* 更漂亮，配合 eslint 美化代码 */
+    "prettier": "^2.3.0",
     /* rm -rf */
     "rimraf": "^3.0.2",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.0.0",
+    /* ts-node 中自动识别 path  */
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.2.2"
+    "typescript": "^4.3.2"
   }
 }
 ```
