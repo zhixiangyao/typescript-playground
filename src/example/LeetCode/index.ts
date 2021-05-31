@@ -63,18 +63,12 @@ class NumMatrix {
   constructor(matrix: number[][]) {
     const row = matrix.length
     const column = row !== 0 ? matrix[0].length : 0
-    this.sums = new Array(row + 1)
-      .fill(0)
-      .map(() => new Array(column + 1).fill(0))
+    this.sums = new Array(row + 1).fill(0).map(() => new Array(column + 1).fill(0))
 
     for (let r = 0; r < row; r++) {
       for (let c = 0; c < column; c++) {
         // 左矩形  + 上矩形 - 左上矩形 + 自己
-        this.sums[r + 1][c + 1] =
-          this.sums[r + 1][c] +
-          this.sums[r][c + 1] -
-          this.sums[r][c] +
-          matrix[r][c]
+        this.sums[r + 1][c + 1] = this.sums[r + 1][c] + this.sums[r][c + 1] - this.sums[r][c] + matrix[r][c]
       }
     }
   }
