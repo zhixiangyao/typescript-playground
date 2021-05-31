@@ -1,5 +1,5 @@
 import { transform } from '@babel/core'
-import { isObjectPattern, identifier, memberExpression, variableDeclaration, variableDeclarator } from '@babel/types'
+import { isObjectPattern, identifier, memberExpression, variableDeclarator, variableDeclaration } from '@babel/types'
 import { default as chalk } from 'chalk'
 import { log } from '@common/index'
 
