@@ -15,34 +15,34 @@
     "lint:prettier": "prettier --write ."
   },
   "dependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/generator": "^7.14.3",
-    "@babel/parser": "^7.14.4",
-    "@babel/traverse": "^7.14.2",
-    "@babel/types": "^7.14.4",
+    "@babel/core": "^7.14.6",
+    "@babel/generator": "^7.14.5",
+    "@babel/parser": "^7.14.7",
+    "@babel/traverse": "^7.14.7",
+    "@babel/types": "^7.14.5",
     "chalk": "^4.1.1",
     "cli-spinners": "^2.6.0",
     "escodegen": "^2.0.0",
     "esprima": "^4.0.1",
     "estraverse": "^5.2.0",
-    "ora": "^5.4.0"
+    "ora": "^5.4.1"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.14",
     "@types/escodegen": "^0.0.6",
     "@types/esprima": "^4.0.2",
     "@types/estraverse": "^5.1.0",
-    "@types/node": "^15.6.1",
-    "@typescript-eslint/eslint-plugin": "^4.25.0",
-    "@typescript-eslint/parser": "^4.25.0",
-    "eslint": "^7.27.0",
+    "@types/node": "^15.14.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "nodemon": "^2.0.7",
-    "prettier": "^2.3.0",
+    "nodemon": "^2.0.9",
+    "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.5"
   }
 }
