@@ -1,5 +1,8 @@
-# Ignore artifacts:
-build
+.vscode
+.idea
+.husky
+.local
 dist
-coverage
-package-lock.json
+node_modules
+/public
+/docs
