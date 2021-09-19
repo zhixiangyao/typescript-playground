@@ -1,7 +1,6 @@
 import { transform } from '@babel/core'
 import { isObjectPattern, identifier, memberExpression, variableDeclarator, variableDeclaration } from '@babel/types'
 import { default as chalk } from 'chalk'
-import { log } from '@common/index'
 
 import type {
   VariableDeclaration,
@@ -99,8 +98,8 @@ const transformObjectSpread = (
   code = `const { sex, age, empty, cute } = { sex: 'male', age: 12, cute: 'yes' };`
 ): string | null | undefined => {
   console.time()
-  log(chalk.green.bold('old =>'))
-  log(code)
+  console.log(chalk.green.bold('old =>'))
+  console.log(code)
 
   const data: BabelFileResult | null = transform(code, {
     plugins: [transformObjectSpreadPlugin()],
@@ -118,8 +117,8 @@ const transformObjectSpread = (
    *   empty = _sex$age$cute.empty,
    *   cute = _sex$age$cute.cute;
    */
-  log(chalk.red.bold('New =>'))
-  log(data?.code)
+  console.log(chalk.red.bold('New =>'))
+  console.log(data?.code)
   console.timeEnd()
 
   return data?.code

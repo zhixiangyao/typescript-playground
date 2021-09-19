@@ -1,7 +1,6 @@
 import { returnStatement, blockStatement, functionExpression } from '@babel/types'
 import { transform } from '@babel/core'
 import { default as chalk } from 'chalk'
-import { log } from '@common/index'
 
 import type { PluginItem, NodePath, BabelFileResult } from '@babel/core'
 import type { ArrowFunctionExpression } from '@babel/types'
@@ -31,16 +30,16 @@ const arrowFnPlugin = (): PluginItem => {
 }
 
 const transformArrowFn = (code = `const fn = (a, b) => a + b;`): string | null | undefined => {
-  log(chalk.green('old => '))
-  log(code)
+  console.log(chalk.green('old => '))
+  console.log(code)
 
   const data: BabelFileResult | null = transform(code, {
     plugins: [arrowFnPlugin()],
   })
 
   // 转换后 const fn = function(a, b) { return a + b }
-  log(chalk.red('new => '))
-  log(data?.code)
+  console.log(chalk.red('new => '))
+  console.log(data?.code)
 
   return data?.code
 }

@@ -1,48 +1,56 @@
 {
-  "name": "typescript-playground",
+  "name": "@zhixiangyao/typescript-playground",
   "version": "0.1.0",
-  "description": "typescript playground",
-  "main": "build/index.js",
-  "keywords": [],
+  "main": "index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "index.js",
+    "dist"
+  ],
   "author": "zhixiangyao",
   "license": "MIT",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhixiangyao/typescript-playground.git"
+  },
   "scripts": {
-    "start": "npm run build && node build/index.js",
-    "start:dev": "nodemon --config nodemon.json",
-    "build": "rimraf ./build && tsc --project tsconfig.json",
-    "lint:eslint": "eslint \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
-    "lint:prettier": "prettier --write ."
+    "dev": "nodemon --config nodemon.json",
+    "build": "zx ./scripts/build.mjs",
+    "lint:eslint": "eslint \"src/**/*.ts\" --fix",
+    "lint:prettier": "prettier --write .",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npx eslint --fix"
+    ],
+    "*.{js,jsx,ts,tsx,md,html,css}": [
+      "npx prettier --write ."
+    ]
   },
   "dependencies": {
     "@babel/core": "^7.15.0",
-    "@babel/generator": "^7.15.0",
     "@babel/parser": "^7.15.3",
-    "@babel/traverse": "^7.15.0",
     "@babel/types": "^7.15.0",
-    "chalk": "^4.1.2",
-    "cli-spinners": "^2.6.0",
-    "escodegen": "^2.0.0",
-    "esprima": "^4.0.1",
-    "estraverse": "^5.2.0",
-    "ora": "^5.4.1"
+    "chalk": "^4.1.2"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.15",
-    "@types/escodegen": "^0.0.6",
-    "@types/esprima": "^4.0.3",
-    "@types/estraverse": "^5.1.1",
     "@types/node": "^15.14.9",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.1",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.1.2",
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "ts-node": "^10.2.1",
-    "tsconfig-paths": "^3.11.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.2",
+    "zx": "^3.1.0"
   }
 }

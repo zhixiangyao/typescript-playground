@@ -1,7 +1,6 @@
 import { isImportSpecifier, stringLiteral, importDefaultSpecifier, importDeclaration } from '@babel/types'
 import { transform } from '@babel/core'
 import { default as chalk } from 'chalk'
-import { log } from '@common/index'
 
 import type { PluginItem, BabelFileResult, NodePath } from '@babel/core'
 import type { ImportDeclaration } from '@babel/types'
@@ -51,8 +50,8 @@ import Vue from 'vue';
 import _Vue from 'vue';
 import { post } from 'axios';`.trimStart()
 ): string | null | undefined => {
-  log(chalk.green('old => '))
-  log(code)
+  console.log(chalk.green('old => '))
+  console.log(code)
 
   const data: BabelFileResult | null = transform(code, {
     plugins: [
@@ -65,8 +64,8 @@ import { post } from 'axios';`.trimStart()
   // import { Button } from 'vant/lib/Button';
   // import { Icon } from 'vant/lib/Icon';
   // import vant from 'vant';
-  log(chalk.red('new => '))
-  log(data?.code)
+  console.log(chalk.red('new => '))
+  console.log(data?.code)
 
   return data?.code
 }

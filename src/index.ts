@@ -1,3 +1,1 @@
-import { clearTerminal } from '@common/index'
-
-clearTerminal()
+export * from './transform'

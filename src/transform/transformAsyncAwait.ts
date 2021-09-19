@@ -2,7 +2,6 @@ import { identifier, blockStatement, catchClause, tryStatement } from '@babel/ty
 import { transform } from '@babel/core'
 import { parse } from '@babel/parser'
 import { default as chalk } from 'chalk'
-import { log } from '@common/index'
 
 import type { FunctionDeclaration } from '@babel/types'
 import type { PluginItem, BabelFileResult, NodePath } from '@babel/core'
@@ -13,7 +12,7 @@ const transformAsyncAwaitPlugin = (): PluginItem => {
       FunctionDeclaration(path: NodePath<FunctionDeclaration>) {
         // Node: async function func() { await asyncFn(); }
         const { node } = path
-        // Edentifier: e
+        // identifier: e
         const catchParam = identifier('e')
         // BlockStatement: console.log(e);
         const catchBlock = blockStatement([parse('console.log(e);').program.body[0]])
@@ -33,8 +32,8 @@ const transformAsyncAwaitPlugin = (): PluginItem => {
  * @returns async function func() { try { await asyncFn(); } catch(e) { console.log(e); } }
  */
 const transformAsyncAwait = (code = `async function func() { await asyncFn();}`): string | null | undefined => {
-  log(chalk.green.bold('old =>'))
-  log(code)
+  console.log(chalk.green.bold('old =>'))
+  console.log(code)
 
   const data: BabelFileResult | null = transform(code, {
     plugins: [transformAsyncAwaitPlugin()],
@@ -50,8 +49,8 @@ const transformAsyncAwait = (code = `async function func() { await asyncFn();}`)
    *   }
    * }
    */
-  log(chalk.red.bold('New =>'))
-  log(data?.code)
+  console.log(chalk.red.bold('New =>'))
+  console.log(data?.code)
 
   return data?.code
 }

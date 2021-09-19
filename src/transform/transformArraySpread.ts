@@ -9,7 +9,6 @@ import {
 } from '@babel/types'
 import { transform } from '@babel/core'
 import { default as chalk } from 'chalk'
-import { log } from '@common/index'
 
 import type { VariableDeclaration, SpreadElement } from '@babel/types'
 import type { PluginItem, BabelFileResult, NodePath } from '@babel/core'
@@ -49,8 +48,8 @@ const transformArraySpreadPlugin = (): PluginItem => {
  * @returns var arr = [].concat(arr1, arr2)
  */
 const transformArraySpread = (code = `const arr = [ ...arr1, ...arr2 ];`): string | null | undefined => {
-  log(chalk.green.bold('old =>'))
-  log(code)
+  console.log(chalk.green.bold('old =>'))
+  console.log(code)
 
   const data: BabelFileResult | null = transform(code, {
     plugins: [transformArraySpreadPlugin()],
@@ -58,8 +57,8 @@ const transformArraySpread = (code = `const arr = [ ...arr1, ...arr2 ];`): strin
 
   // 转换后
   // var arr = [].concat(arr1, arr2)
-  log(chalk.red.bold('New =>'))
-  log(data?.code)
+  console.log(chalk.red.bold('New =>'))
+  console.log(data?.code)
 
   return data?.code
 }
