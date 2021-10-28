@@ -1,14 +1,9 @@
-import readline from 'readline'
-
-const clearTerminal = () => {
-  readline.cursorTo(process.stdout, 0, 0)
-  readline.clearLine(process.stdout, 0)
-  readline.clearScreenDown(process.stdout)
-}
+import { clearTerminal } from './utils'
+import 'reflect-metadata'
 
 clearTerminal()
 
-function fn(num: number) {
+function classDecorator(num: number) {
   return function <T extends { new (...arg: any[]): {} }>(constructor: T) {
     return class extends constructor {
       json = { a: num }
@@ -16,10 +11,16 @@ function fn(num: number) {
   }
 }
 
-@fn(12)
+@Reflect.metadata('inClass', 'A')
+@classDecorator(12)
 class User {
-  json: {
+  public json: {
     a: number
+  }
+
+  @Reflect.metadata('inMethod', 'B')
+  public hello(): string {
+    return 'hello world'
   }
 }
 
@@ -29,3 +30,6 @@ console.log(obj.json)
 
 const obj2 = new User()
 console.log(obj2.json)
+
+console.log(Reflect.getMetadata('inClass', User)) // 'A'
+console.log(Reflect.getMetadata('inMethod', new User(), 'hello')) // 'B'
