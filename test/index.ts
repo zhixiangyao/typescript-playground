@@ -3,12 +3,12 @@ import 'reflect-metadata'
 
 clearTerminal()
 
-import './ReflectMetaData'
+// import './ReflectMetaData'
 
-console.log('---------------------------------------------------------')
+// console.log('---------------------------------------------------------')
 
-import './IOC_DI'
+// import './IOC_DI'
 
-console.log('---------------------------------------------------------')
+// console.log('---------------------------------------------------------')
 
 import './mapRoute'

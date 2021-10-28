@@ -1,27 +1,36 @@
 import { isConstructor, isFunction } from './utils'
+import 'reflect-metadata'
 
-const METHOD_METADATA = 'method'
-const PATH_METADATA = 'path'
+enum METHOD {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
+enum METADATA_KEY {
+  METHOD = 'method',
+  PATH = 'path',
+}
 
 const Controller = (path: string): ClassDecorator => {
   return target => {
-    Reflect.defineMetadata(PATH_METADATA, path, target)
+    Reflect.defineMetadata(METADATA_KEY.PATH, path, target)
   }
 }
 
 const createMappingDecorator =
-  (method: string) =>
+  (method: keyof typeof METHOD) =>
   (path: string): MethodDecorator => {
     return (target, key, descriptor) => {
-      Reflect.defineMetadata(PATH_METADATA, path, descriptor.value as unknown as object)
-      Reflect.defineMetadata(METHOD_METADATA, method, descriptor.value as unknown as object)
+      Reflect.defineMetadata(METADATA_KEY.PATH, path, descriptor.value as unknown as object)
+      Reflect.defineMetadata(METADATA_KEY.METHOD, method, descriptor.value as unknown as object)
     }
   }
 
-const Get = createMappingDecorator('GET')
-const Post = createMappingDecorator('POST')
+const Get = createMappingDecorator(METHOD.GET)
+const Post = createMappingDecorator(METHOD.POST)
 
-function mapRoute(instance: Object) {
+const mapRoute = (instance: Object) => {
   const prototype = Object.getPrototypeOf(instance)
 
   // 筛选出类的 methodName
@@ -33,8 +42,8 @@ function mapRoute(instance: Object) {
     const fn = prototype[methodName]
 
     // 取出定义的 metadata
-    const route = Reflect.getMetadata(PATH_METADATA, fn)
-    const method = Reflect.getMetadata(METHOD_METADATA, fn)
+    const route = Reflect.getMetadata(METADATA_KEY.PATH, fn)
+    const method = Reflect.getMetadata(METADATA_KEY.METHOD, fn)
     return {
       route,
       method,
@@ -55,6 +64,25 @@ class SomeClass {
   somePostMethod() {}
 }
 
-Reflect.getMetadata(PATH_METADATA, SomeClass) // '/test'
+/**
+ * /test
+ */
+console.log(Reflect.getMetadata(METADATA_KEY.PATH, SomeClass))
 
+/**
+ * [
+ *   {
+ *     route: '/a',
+ *     method: 'GET',
+ *     fn: [Function: someGetMethod],
+ *     methodName: 'someGetMethod'
+ *   },
+ *   {
+ *     route: '/b',
+ *     method: 'POST',
+ *     fn: [Function: somePostMethod],
+ *     methodName: 'somePostMethod'
+ *   }
+ * ]
+ */
 console.log(mapRoute(new SomeClass()))

@@ -1,4 +1,5 @@
-// Inversion Of Control, Dependency Injection
+// Angular2 Inversion Of Control, Dependency Injection
+import 'reflect-metadata'
 
 type Constructor<T = any> = new (...args: any[]) => T
 

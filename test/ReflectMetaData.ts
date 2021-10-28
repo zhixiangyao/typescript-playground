@@ -1,4 +1,5 @@
 import { isSymbolObject } from 'util/types'
+import 'reflect-metadata'
 
 const ClassDecorator = (num: number) => {
   return <T extends { new (...arg: any[]): {} }>(target: T) => {
