@@ -12,10 +12,14 @@ const ClassDecorator = (num: number) => {
   }
 }
 
-const PropDecorator = (): PropertyDecorator => {
-  return (target: Object, propertyKey: string | symbol) => {
-    const PropFunction = Reflect.getMetadata('design:type', target, propertyKey) as Function
-    console.log(`${isSymbolObject(propertyKey) ? propertyKey.toString() : propertyKey} type: ${PropFunction.name}`)
+const MethodDecorator = (): MethodDecorator => {
+  return (target: Object, propertyKey: string | symbol, descriptor) => {
+    const type = Reflect.getMetadata('design:type', target, propertyKey) as Function
+    const paramtypes = Reflect.getMetadata('design:paramtypes', target, propertyKey) as Function[]
+    const methodName = isSymbolObject(propertyKey) ? propertyKey.toString() : propertyKey
+    console.log(`Method: ${methodName}, type: ${type.name}`)
+
+    paramtypes.forEach(({ name }, index) => console.log(`Method: ${methodName}, param[${index}] type: ${name}`))
   }
 }
 
@@ -27,9 +31,9 @@ class User {
   }
 
   @Reflect.metadata('inMethod', 'B')
-  @PropDecorator()
-  public hello(): string {
-    return 'hello world'
+  @MethodDecorator()
+  public hello(name: string): string {
+    return 'hello world' + name
   }
 }
 
