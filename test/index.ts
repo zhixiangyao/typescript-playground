@@ -14,8 +14,8 @@ const ClassDecorator = (num: number) => {
 
 const PropDecorator = (): PropertyDecorator => {
   return (target: Object, propertyKey: string | symbol) => {
-    const type = Reflect.getMetadata('design:type', target, propertyKey)
-    console.log(`${isSymbolObject(propertyKey) ? propertyKey.toString() : propertyKey} type: ${type.name}`)
+    const PropFunction = Reflect.getMetadata('design:type', target, propertyKey) as Function
+    console.log(`${isSymbolObject(propertyKey) ? propertyKey.toString() : propertyKey} type: ${PropFunction.name}`)
   }
 }
 
