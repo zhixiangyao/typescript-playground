@@ -19,8 +19,6 @@ class TestService {
   }
 }
 
-console.log(new TestService(new OtherService()))
-
 const Factory = <T>(target: Constructor<T>): T => {
   // 获取所有注入的服务
   const providers: Constructor[] = Reflect.getMetadata('design:paramtypes', target) // [OtherService]
