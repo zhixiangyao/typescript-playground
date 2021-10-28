@@ -6,4 +6,15 @@ const clearTerminal = () => {
   readline.clearScreenDown(process.stdout)
 }
 
-export { clearTerminal }
+const isConstructor = (value: string) => {
+  return value === 'constructor'
+}
+
+const isFunction = (f: any) => {
+  if (typeof f === 'function') {
+    return true
+  }
+  return false
+}
+
+export { clearTerminal, isConstructor, isFunction }
