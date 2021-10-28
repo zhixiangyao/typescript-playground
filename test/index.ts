@@ -1,35 +1,40 @@
 import { clearTerminal } from './utils'
 import 'reflect-metadata'
+import { isSymbolObject } from 'util/types'
 
 clearTerminal()
 
-function classDecorator(num: number) {
-  return function <T extends { new (...arg: any[]): {} }>(constructor: T) {
+const ClassDecorator = (num: number) => {
+  return <T extends { new (...arg: any[]): {} }>(constructor: T) => {
     return class extends constructor {
       json = { a: num }
     }
   }
 }
 
+const PropDecorator = (): PropertyDecorator => {
+  return (target: Object, propertyKey: string | symbol) => {
+    const type = Reflect.getMetadata('design:type', target, propertyKey)
+    console.log(`${isSymbolObject(propertyKey) ? propertyKey.toString() : propertyKey} type: ${type.name}`)
+  }
+}
+
 @Reflect.metadata('inClass', 'A')
-@classDecorator(12)
+@ClassDecorator(12)
 class User {
   public json: {
     a: number
   }
 
   @Reflect.metadata('inMethod', 'B')
+  @PropDecorator()
   public hello(): string {
     return 'hello world'
   }
 }
 
-const obj = new User()
-obj.json.a = 80
-console.log(obj.json)
-
 const obj2 = new User()
-console.log(obj2.json)
+console.log(obj2.json) // { a: 12 }
 
 console.log(Reflect.getMetadata('inClass', User)) // 'A'
 console.log(Reflect.getMetadata('inMethod', new User(), 'hello')) // 'B'
