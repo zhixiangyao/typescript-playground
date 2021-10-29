@@ -32,8 +32,8 @@ const Get = createMappingDecorator(METHOD.GET)
 const Post = createMappingDecorator(METHOD.POST)
 const Put = createMappingDecorator(METHOD.PUT)
 
-const routeGenerator = <T extends Object>(instance: T) => {
-  const prototype = Object.getPrototypeOf(instance) as T
+const routeGenerator = <T extends object>(instance: T) => {
+  const prototype = Object.getPrototypeOf(instance)
 
   const rootRoutePath = Reflect.getMetadata(METADATA_KEY.PATH, prototype['constructor'])
 
@@ -43,7 +43,7 @@ const routeGenerator = <T extends Object>(instance: T) => {
   )
 
   return methodsNames.map(methodName => {
-    const fn = prototype[methodName]
+    const fn = prototype[methodName] as Function
 
     // 取出定义的 metadata
     const routePath = Reflect.getMetadata(METADATA_KEY.PATH, fn)
