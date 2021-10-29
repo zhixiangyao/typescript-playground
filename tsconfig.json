@@ -76,7 +76,8 @@
     "skipLibCheck": true,                            /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true,        /* Disallow inconsistently-cased references to the same file. */
     "useDefineForClassFields": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "pretty": true
   },
   "include": ["src/"],
   "exclude": ["node_modules/", "dist/"]
