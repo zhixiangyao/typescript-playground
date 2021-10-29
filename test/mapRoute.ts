@@ -7,6 +7,7 @@ enum METHOD {
   PUT = 'PUT',
   DELETE = 'DELETE',
 }
+
 enum METADATA_KEY {
   METHOD = 'method',
   PATH = 'path',
@@ -29,9 +30,12 @@ const createMappingDecorator =
 
 const Get = createMappingDecorator(METHOD.GET)
 const Post = createMappingDecorator(METHOD.POST)
+const Put = createMappingDecorator(METHOD.PUT)
 
-const mapRoute = (instance: Object) => {
-  const prototype = Object.getPrototypeOf(instance)
+const routeGenerator = <T extends Object>(instance: T) => {
+  const prototype = Object.getPrototypeOf(instance) as T
+
+  const rootRoutePath = Reflect.getMetadata(METADATA_KEY.PATH, prototype['constructor'])
 
   // 筛选出类的 methodName
   const methodsNames = Object.getOwnPropertyNames(prototype).filter(
@@ -42,10 +46,10 @@ const mapRoute = (instance: Object) => {
     const fn = prototype[methodName]
 
     // 取出定义的 metadata
-    const route = Reflect.getMetadata(METADATA_KEY.PATH, fn)
+    const routePath = Reflect.getMetadata(METADATA_KEY.PATH, fn)
     const method = Reflect.getMetadata(METADATA_KEY.METHOD, fn)
     return {
-      route,
+      route: `${rootRoutePath}${routePath}`,
       method,
       fn,
       methodName,
@@ -61,28 +65,40 @@ class SomeClass {
   }
 
   @Post('/b')
-  somePostMethod() {}
+  somePostMethod() {
+    return 'hello world'
+  }
+
+  @Put('/c')
+  somePutMethod() {
+    return 'hello world'
+  }
 }
 
-/**
- * /test
- */
-console.log(Reflect.getMetadata(METADATA_KEY.PATH, SomeClass))
+const someClass: SomeClass = new SomeClass()
+const FakeSomeClass0: new (...args: any[]) => SomeClass = SomeClass
+const FakeSomeClass1: typeof SomeClass = SomeClass
 
 /**
  * [
  *   {
- *     route: '/a',
+ *     route: '/test/a',
  *     method: 'GET',
  *     fn: [Function: someGetMethod],
  *     methodName: 'someGetMethod'
  *   },
  *   {
- *     route: '/b',
+ *     route: '/test/b',
  *     method: 'POST',
  *     fn: [Function: somePostMethod],
  *     methodName: 'somePostMethod'
  *   }
+ *   {
+ *     route: '/test/c',
+ *     method: 'PUT',
+ *     fn: [Function: somePutMethod],
+ *     methodName: 'somePutMethod'
+ *   }
  * ]
  */
-console.log(mapRoute(new SomeClass()))
+console.log(routeGenerator<SomeClass>(new SomeClass()))
