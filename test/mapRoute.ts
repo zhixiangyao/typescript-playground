@@ -23,6 +23,7 @@ const createMappingDecorator =
   (method: keyof typeof METHOD) =>
   (path: string): MethodDecorator => {
     return (target, key, descriptor) => {
+      // descriptor.value === (target as unknown)[key] === [Function someXXXMethod]
       Reflect.defineMetadata(METADATA_KEY.PATH, path, descriptor.value as unknown as object)
       Reflect.defineMetadata(METADATA_KEY.METHOD, method, descriptor.value as unknown as object)
     }
