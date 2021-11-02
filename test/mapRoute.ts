@@ -15,6 +15,11 @@ enum METADATA_KEY {
 
 const Controller = (path: string): ClassDecorator => {
   return target => {
+    // defineMetadata has 4 params!
+    // metadataKey: METADATA_KEY.PATH,
+    // metadataValue: path,
+    // target: target,
+    // propertyKey: undefined
     Reflect.defineMetadata(METADATA_KEY.PATH, path, target)
   }
 }
@@ -23,6 +28,8 @@ const createMappingDecorator =
   (method: keyof typeof METHOD) =>
   (path: string): MethodDecorator => {
     return (target, key, descriptor) => {
+      // MethodDecorator: target === SomeClass.prototype
+      // ClassDecorator: target === SomeClass
       // descriptor.value === (target as unknown)[key] === [Function someXXXMethod]
       Reflect.defineMetadata(METADATA_KEY.PATH, path, descriptor.value as unknown as object)
       Reflect.defineMetadata(METADATA_KEY.METHOD, method, descriptor.value as unknown as object)
@@ -103,3 +110,14 @@ const FakeSomeClass1: typeof SomeClass = SomeClass
  * ]
  */
 console.log(routeGenerator<SomeClass>(new SomeClass()))
+
+/**
+ * Reflect.metadata:
+ *
+ * function metadata(metadataKey, metadataValue) {
+ *   function decorator(target, propertyKey) {
+ *     Reflect.defineMetadata(metadataKey, metadataValue, target, propertyKey);
+ *   }
+ *   return decorator;
+ * }
+ */
