@@ -31,6 +31,7 @@ const createMappingDecorator =
       // MethodDecorator: target === SomeClass.prototype
       // ClassDecorator: target === SomeClass
       // descriptor.value === (target as unknown)[key] === [Function someXXXMethod]
+
       Reflect.defineMetadata(METADATA_KEY.PATH, path, descriptor.value as unknown as object)
       Reflect.defineMetadata(METADATA_KEY.METHOD, method, descriptor.value as unknown as object)
     }
@@ -43,6 +44,7 @@ const Put = createMappingDecorator(METHOD.PUT)
 const routeGenerator = <T extends object>(instance: T) => {
   const prototype = Object.getPrototypeOf(instance)
 
+  // prototype['constructor'] === instance.constructor
   const rootRoutePath = Reflect.getMetadata(METADATA_KEY.PATH, prototype['constructor'])
 
   // 筛选出类的 methodName
