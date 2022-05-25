@@ -3,7 +3,7 @@ import 'reflect-metadata'
 
 clearTerminal()
 
-// import './ReflectMetaData'
+import './reflectMetaData'
 
 // console.log('---------------------------------------------------------')
 

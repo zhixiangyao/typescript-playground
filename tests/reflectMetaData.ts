@@ -31,9 +31,11 @@ const MethodDecorator = (): MethodDecorator => {
 @Reflect.metadata('inClass', 'A')
 @ClassDecorator(12)
 class User {
-  public json: {
-    a: number
-  }
+  public json:
+    | {
+        a: number
+      }
+    | undefined
 
   @Reflect.metadata('inMethod', 'B')
   @MethodDecorator()
