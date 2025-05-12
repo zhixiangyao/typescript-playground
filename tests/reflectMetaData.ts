@@ -33,8 +33,12 @@ const MethodDecorator = (): MethodDecorator => {
   }
 }
 
-class Hello {
+class MessageHello {
   constructor(public msg: string) {}
+}
+
+class ParamAge {
+  constructor(public age: number) {}
 }
 
 @ClassDecorator(12)
@@ -42,14 +46,14 @@ class User {
   public json?: { a: number }
 
   @MethodDecorator()
-  public hello(name: string, age: number): Hello {
-    return new Hello('hello world, hi~ my name is' + name + ', ' + age + '.')
+  public hello(name: string, age: ParamAge): MessageHello {
+    return new MessageHello('hello world, hi~ my name is' + name + ', ' + age + '.')
   }
 }
 
-const obj2 = new User()
+const user = new User()
 
 console.log()
-console.log(obj2.json) // { a: 12 }
+console.log(user.json) // { a: 12 }
 console.log(Reflect.getMetadata('classMetaData', User)) // 'aaaa'
 console.log(Reflect.getMetadata('methodMetaData', new User(), 'hello')) // 'bbbb'
