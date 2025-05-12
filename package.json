@@ -14,21 +14,16 @@
     "type": "git",
     "url": "git+https://github.com/zhixiangyao/typescript-playground.git"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "nodemon --config nodemon.json",
     "build": "zx ./scripts/build.mjs",
     "lint:eslint": "eslint \"src/**/*.ts\" --fix",
     "lint:prettier": "prettier --write .",
-    "prepare": "husky install",
-    "lint-staged": "lint-staged"
-  },
-  "lint-staged": {
-    "*.ts": [
-      "npx eslint --fix"
-    ],
-    "*.{js,jsx,ts,tsx,md,html,css}": [
-      "npx prettier --write ."
-    ]
+    "lint-staged": "lint-staged",
+    "postinstall": "simple-git-hooks"
   },
   "dependencies": {
     "@babel/core": "^7.18.0",
@@ -45,13 +40,24 @@
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
     "nodemon": "^3.1.10",
     "prettier": "^2.6.2",
     "rimraf": "^6.0.1",
+    "simple-git-hooks": "^2.13.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "zx": "^8.5.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npx eslint --fix"
+    ],
+    "*.{js,jsx,ts,tsx,md,html,css}": [
+      "npx prettier --write ."
+    ]
   }
 }
