@@ -85,10 +85,6 @@ class SomeClass {
   }
 }
 
-const someClass: SomeClass = new SomeClass()
-const FakeSomeClass0: new (...args: any[]) => SomeClass = SomeClass
-const FakeSomeClass1: typeof SomeClass = SomeClass
-
 /**
  * [
  *   {

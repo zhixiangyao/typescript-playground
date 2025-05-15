@@ -12,7 +12,7 @@ const ClassDecorator = (num: number) => {
 }
 
 const MethodDecorator = (): MethodDecorator => {
-  return (target: Object, propertyKey: string | symbol, descriptor) => {
+  return <T>(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
     const methodName = isSymbolObject(propertyKey) ? propertyKey.toString() : propertyKey
 
     const type = Reflect.getMetadata('design:type', target, propertyKey) as Function
@@ -27,6 +27,7 @@ const MethodDecorator = (): MethodDecorator => {
     })
 
     console.log('类的方法返回值类型:', returnType)
+    console.log()
 
     // 在类的原型属性 'someMethod' 上定义元数据，key 为 `methodMetaData`，value 为 `bbbb`
     Reflect.defineMetadata('methodMetaData', 'bbbb', target, propertyKey)
@@ -44,16 +45,26 @@ class ParamAge {
 @ClassDecorator(12)
 class User {
   public json?: { a: number }
+  #start?: MessageHello
 
   @MethodDecorator()
   public hello(name: string, age: ParamAge): MessageHello {
-    return new MessageHello('hello world, hi~ my name is' + name + ', ' + age + '.')
+    return new MessageHello('hello world, hi~ my name is' + name + ', ' + age.age + '.')
+  }
+
+  @MethodDecorator()
+  set start(value: MessageHello) {
+    this.#start = value
+  }
+
+  get start() {
+    return this.#start ?? new MessageHello('empty')
   }
 }
 
 const user = new User()
 
-console.log()
-console.log(user.json) // { a: 12 }
 console.log(Reflect.getMetadata('classMetaData', User)) // 'aaaa'
 console.log(Reflect.getMetadata('methodMetaData', new User(), 'hello')) // 'bbbb'
+console.log(user.hello('yzx', new ParamAge(123)).msg)
+user.start = user.hello('yzx', new ParamAge(123))
