@@ -1,32 +1,39 @@
 // Angular2 Inversion Of Control, Dependency Injection
 import 'reflect-metadata'
 
-type Constructor<T = any> = new (...args: any[]) => T
+const isInjectable = Symbol('isInjectable')
 
-const Injectable: ClassDecorator = () => {}
-
-class OtherService {
-  a = 1
+const Injectable: ClassDecorator = target => {
+  Reflect.defineMetadata(isInjectable, true, target)
 }
 
-const otherService = new (OtherService as Constructor)()
+class NonService {
+  non = 'non!'
+}
 
 @Injectable
-class TestService {
-  constructor(public otherService: OtherService) {}
+class OtherService {
+  other = 'other!'
+}
 
-  testMethod() {
-    console.log(this.otherService.a)
+@Injectable
+class MainService {
+  constructor(private nonService: NonService, private otherService: OtherService) {}
+
+  run() {
+    console.log(this.nonService) // undefined
+    console.log(this.otherService.other) // "other!"
   }
 }
 
+type Constructor<T = any> = new (...args: any[]) => T
+
 const Factory = <T>(target: Constructor<T>): T => {
-  // 获取所有注入的服务
-  const providers: Constructor[] = Reflect.getMetadata('design:paramtypes', target) // [OtherService]
-  console.log('providers:', providers)
-  const args = providers.map((provider: Constructor) => new provider())
-  console.log('args', args)
+  const constructorParams: Constructor[] = Reflect.getMetadata('design:paramtypes', target)
+  const args = constructorParams.map((constructorParam: Constructor) => {
+    return Reflect.getMetadata(isInjectable, constructorParam) ? new constructorParam() : void 0
+  })
   return new target(...args)
 }
 
-Factory(TestService).testMethod() // 1
+Factory(MainService).run() // 1
