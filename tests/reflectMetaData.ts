@@ -5,6 +5,12 @@ const ClassDecorator = (num: number) => {
   return <T extends { new (...arg: any[]): {} }>(target: T) => {
     // 在类上定义元数据，key 为 `classMetaData`，value 为 `aaaa`
     Reflect.defineMetadata('classMetaData', 'aaaa', target)
+
+    console.log('============= Class Decorator Called ================')
+    console.log(`Target: ${target.name || target}`)
+    console.log('======================================================')
+    console.log()
+
     return class extends target {
       json = { a: num }
     }
@@ -19,18 +25,34 @@ const MethodDecorator = (): MethodDecorator => {
     const paramTypes = Reflect.getMetadata('design:paramtypes', target, propertyKey) as Function[]
     const returnType = Reflect.getMetadata('design:returntype', target, propertyKey) as Function
 
-    console.log('类的方法名:', methodName)
-    console.log('类的方法类型:', type)
-
+    console.log('============= Method Decorator Called ================')
+    console.log(`Target: ${target.constructor.name || target}`)
+    console.log(`Method Name: ${methodName}`)
+    console.log(`Method Overall Type: ${type.name}`)
     paramTypes.forEach((paramType, i) => {
-      console.log(`类的方法第 ${i} 参数的类型:`, paramType)
+      console.log(`Parameter ${i} Type: ${paramType?.name ?? 'N/A'}`)
     })
-
-    console.log('类的方法返回值类型:', returnType)
+    console.log('Method Return Type:', returnType?.name ?? 'N/A')
+    console.log('======================================================')
     console.log()
 
     // 在类的原型属性 'someMethod' 上定义元数据，key 为 `methodMetaData`，value 为 `bbbb`
     Reflect.defineMetadata('methodMetaData', 'bbbb', target, propertyKey)
+  }
+}
+
+const ParameterDecorator = (): ParameterDecorator => {
+  return (target: Object, propertyKey: string | symbol | undefined, parameterIndex: number) => {
+    console.log('============= Parameter Decorator Called =============')
+    console.log(`Target: ${target.constructor.name || target}`)
+    console.log(`Method Name: ${String(propertyKey)}`)
+    console.log(`Parameter Index: ${parameterIndex}`)
+    const designParamTypes = propertyKey ? Reflect.getMetadata('design:paramtypes', target, propertyKey) : void 0
+    if (designParamTypes) {
+      console.log(`Parameter Type: ${designParamTypes[parameterIndex].name}`)
+    }
+    console.log('======================================================')
+    console.log()
   }
 }
 
@@ -48,7 +70,7 @@ class User {
   #start?: MessageHello
 
   @MethodDecorator()
-  public hello(name: string, age: ParamAge): MessageHello {
+  public hello(@ParameterDecorator() name: string, age: ParamAge): MessageHello {
     return new MessageHello('hello world, hi~ my name is' + name + ', ' + age.age + '.')
   }
 
@@ -66,5 +88,7 @@ const user = new User()
 
 console.log(Reflect.getMetadata('classMetaData', User)) // 'aaaa'
 console.log(Reflect.getMetadata('methodMetaData', new User(), 'hello')) // 'bbbb'
-console.log(user.hello('yzx', new ParamAge(123)).msg)
-user.start = user.hello('yzx', new ParamAge(123))
+const hello = user.hello('yzx', new ParamAge(123))
+user.start = hello
+console.log(hello.msg)
+console.log(user)
